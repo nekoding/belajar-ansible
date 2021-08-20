@@ -150,7 +150,8 @@ Dokumentasi penggunaan state di ansible : [state ansible doc](https://docs.ansib
 
 Untuk menjalankan command di playbook gunakan command 
 
-```
+```sh
+
 ansible-playbook --ask-become-pass install_apache.yml
 
 ```
