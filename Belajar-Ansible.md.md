@@ -92,6 +92,23 @@ ansible all -m NAMA_MODUL
 
 Nantinya secara otomatis ansible akan menjalankan konfigurasi yang ada di folder dengan nama file `ansible.cfg` tersebut dan tidak menggunakan konfigurasi dari file `/etc/ansible/ansible.cfg`.
 
-## Menjalankan command di ansible
+## Menjalankan command di ansible (ad-hoc)
 
-Untuk dapat menjalankan command linux di ansible 
+Untuk dapat menjalankan command linux di ansible dapat dengan cara
+
+```sh
+
+ansible all -m apt -a update_cache=true --become --ask-become-pass
+
+```
+
+breakdown command :  
+
+`-m apt`  : Menggunakan modul apt. apt merupakan modul yang digunakan untuk menginstall package di server berbasis ubuntu / debian.   
+  
+`-a update_cache=true` : Mengirimkan argument untuk melakukan update repository didalam server / setara dengan command `apt update`  
+  
+`--become --ask-become-pass` : Menjalankan command dengan melakukan privilege escalation apabila dibutuhkan. 
+
+Karena menjalankan dalam mode `all` maka command akan gagal apabila password dari user `sudo` tiap server berbeda beda.
+Untuk lebih lengkap mengenai penjelasan fungsi dari masing - masing flag bisa dibaca disini saja [Ansible adhoc guide](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html#intro-adhoc)
