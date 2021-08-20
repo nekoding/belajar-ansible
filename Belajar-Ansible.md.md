@@ -112,3 +112,46 @@ breakdown command :
 
 Karena menjalankan dalam mode `all` maka command akan gagal apabila password dari user `sudo` tiap server berbeda beda.
 Untuk lebih lengkap mengenai penjelasan fungsi dari masing - masing flag bisa dibaca disini saja [Ansible adhoc guide](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html#intro-adhoc)
+
+## Menulis ansible playbook
+
+Buat sebuah file dengan nama `install_apache.yml`
+
+lalu isikan seperti ini :
+
+```yml
+---
+
+- hosts: all            // Menargetkan semua hosts server 
+  become: true          // Melakukan privelege escalation ke user yang dapat melakukan command
+  tasks:                // Mendifiniskan task yang akan dilakukan oleh ansible
+
+  - name: install apache2 package   // Title dari proses yang dijalankan
+    apt:                // Mengeksekusi module apt
+      name: apache2     // Nama package yang akan diinstall
+      state: latest     // Memastikan versi dari package paling baru
+
+  - name: xxx           // Title dari proses yang dijalankan
+    apt:                // Mengeksekusi module apt
+      name: xxx         // Nama package yang akan diinstall
+      state: latest     // Memastikan versi dari package paling baru
+      
+
+```
+
+Dokumentasi dari module apt : [apt ansible module](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html)
+
+
+State : 
+ - latest : Mencari paling baru
+ - absent : Menghapus
+
+Dokumentasi penggunaan state di ansible : [state ansible doc](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html#parameter-state)
+
+Untuk menjalankan command di playbook gunakan command 
+
+```
+ansible-playbook --ask-become-pass install_apache.yml
+
+```
+
