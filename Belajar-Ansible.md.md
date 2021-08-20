@@ -156,3 +156,31 @@ ansible-playbook --ask-become-pass install_apache.yml
 
 ```
 
+## Bekerja dalam distribusi OS yang berbeda
+
+Untuk mengatasi error apabila menjalankan command di dalam OS yang berbeda maka dapat menambahkan kondisional konfigurasi seperti ini :
+
+```yml
+
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install apache2 package
+    apt: 
+      name: apache2
+      state: latest
+    when: ansible_distribution == 'Ubuntu'
+
+```
+
+Maka tasks dari "Install apache2 package" hanya akan dijalankan apabila OS yang digunakan server adalah Ubuntu. Untuk mengetahui variabel yang dapat digunakan di dalam `when` dapat menjalankan command berikut :
+
+```sh
+
+ansible all -m gather_facts --limit IP_SERVER
+
+```
+

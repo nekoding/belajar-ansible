@@ -1,0 +1,34 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update cache file repo
+    apt:
+      update_cache: yes
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: install apache2 package
+    apt: 
+      name: apache2
+      state: latest
+    when: ansible_distribution == 'Ubuntu'
+  
+  - name: add apache2 php lib
+    apt:
+      name: libapach2-mod-php
+      state: latest
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: install apache2-httpd
+    dnf:
+      name: httpd
+      state: latest
+    when: ansible_distribution == 'CentOS'
+
+  - name: add apach2-httpd php lib
+    dnf:
+      name: php
+      state: latest
+    when: ansible_distribution == 'CentOS'
